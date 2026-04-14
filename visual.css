@@ -441,3 +441,46 @@ body {
     font-size: 16px;
   }
 }
+
+/* ===== AJUSTE FINO PARA CELULAR ===== */
+
+@media (max-width: 600px) {
+
+  /* Modelo principal */
+  .modelo-grande {
+    width: 100%;
+    height: auto; /* remove altura fixa */
+    max-width: 320px;
+  }
+
+  .modelo-grande img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* não corta a imagem */
+  }
+
+  /* Imagens dos itens */
+  .icone {
+    height: auto;
+    padding: 10px;
+    background: #c78100e5;
+  }
+
+  .icone img {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain; /* encaixa certinho */
+  }
+
+  /* Melhor espaçamento */
+  .item {
+    margin-bottom: 10px;
+  }
+
+  /* Texto mais confortável */
+  .texto {
+    padding: 16px;
+  }
+
+}
