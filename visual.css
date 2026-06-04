@@ -484,3 +484,95 @@ body {
   }
 
 }
+.btn-menu {
+  color: #111;
+  text-decoration: none;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.link-exercicios {
+  display: none;
+}
+
+.secao-contato {
+  background-color: #e6d2b4;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 35px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.secao-contato h2 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.secao-contato p {
+  margin-bottom: 20px;
+}
+
+.form-contato {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-contato input,
+.form-contato select,
+.form-contato textarea {
+  width: 100%;
+  padding: 13px;
+  border: 2px solid #c7a46d;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.form-contato textarea {
+  height: 120px;
+  resize: none;
+}
+
+.form-contato button {
+  background-color: #111;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-contato button:hover {
+  opacity: 0.85;
+}
+
+.voltar {
+  display: inline-block;
+  margin-top: 25px;
+  color: #111;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.erro {
+  border-color: red !important;
+}
+
+.sucesso {
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.mensagem-erro {
+  color: red;
+  font-weight: bold;
+  margin-top: 15px;
+}
