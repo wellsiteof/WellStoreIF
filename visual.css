@@ -576,3 +576,22 @@ body {
   font-weight: bold;
   margin-top: 15px;
 }
+.erro {
+  border: 2px solid red !important;
+}
+
+.mensagem-erro {
+  color: red;
+  font-size: 14px;
+  text-align: left;
+  margin-top: -8px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.sucesso {
+  color: green;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
