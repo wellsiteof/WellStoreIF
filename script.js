@@ -1,179 +1,102 @@
 const formContato = document.getElementById("formContato");
-
-const respostaFormulario =
-  document.getElementById("respostaFormulario");
+const respostaFormulario = document.getElementById("respostaFormulario");
 
 if (formContato) {
-
   formContato.addEventListener("submit", function (evento) {
-
     evento.preventDefault();
 
-    limparMensagens();
+    limparErros();
 
-    const nome =
-      document.getElementById("nome");
+    let valido = true;
 
-    const email =
-      document.getElementById("email");
+    const nome = document.getElementById("nome");
+    const email = document.getElementById("email");
+    const telefone = document.getElementById("telefone");
+    const assunto = document.getElementById("assunto");
+    const mensagem = document.getElementById("mensagem");
 
-    const telefone =
-      document.getElementById("telefone");
+    const nomeValor = nome.value.trim();
+    const emailValor = email.value.trim();
+    const telefoneValor = telefone.value.trim();
+    const assuntoValor = assunto.value;
+    const mensagemValor = mensagem.value.trim();
 
-    const assunto =
-      document.getElementById("assunto");
-
-    const mensagem =
-      document.getElementById("mensagem");
-
-    let formularioValido = true;
-
-    /* ===== NOME ===== */
-
-    if (nome.value.trim() === "") {
-
-      mostrarErro(nome,
-        "Digite seu nome.");
-
-      formularioValido = false;
-
-    } else if (nome.value.trim().length < 3) {
-
-      mostrarErro(nome,
-        "O nome deve ter pelo menos 3 letras.");
-
-      formularioValido = false;
+    if (nomeValor === "") {
+      mostrarErro(nome, "O campo nome é obrigatório.");
+      valido = false;
+    } else if (nomeValor.length < 3) {
+      mostrarErro(nome, "O nome precisa ter pelo menos 3 letras.");
+      valido = false;
+    } else if (!/^[A-Za-zÀ-ÿ\s]+$/.test(nomeValor)) {
+      mostrarErro(nome, "O nome deve conter apenas letras.");
+      valido = false;
     }
 
-    /* ===== EMAIL ===== */
-
-    if (email.value.trim() === "") {
-
-      mostrarErro(email,
-        "Digite seu e-mail.");
-
-      formularioValido = false;
-
-    } else if (!validarEmail(email.value)) {
-
-      mostrarErro(email,
-        "Digite um e-mail válido.");
-
-      formularioValido = false;
+    if (emailValor === "") {
+      mostrarErro(email, "O campo e-mail é obrigatório.");
+      valido = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValor)) {
+      mostrarErro(email, "Digite um e-mail válido. Exemplo: nome@email.com");
+      valido = false;
     }
 
-    /* ===== TELEFONE ===== */
+    const telefoneNumeros = telefoneValor.replace(/\D/g, "");
 
-    if (telefone.value.trim() === "") {
-
-      mostrarErro(telefone,
-        "Digite seu telefone.");
-
-      formularioValido = false;
-
-    } else if (telefone.value.replace(/\D/g, "").length < 10) {
-
-      mostrarErro(telefone,
-        "Telefone inválido.");
-
-      formularioValido = false;
+    if (telefoneValor === "") {
+      mostrarErro(telefone, "O campo telefone é obrigatório.");
+      valido = false;
+    } else if (telefoneNumeros.length < 10 || telefoneNumeros.length > 11) {
+      mostrarErro(telefone, "Digite um telefone válido com DDD.");
+      valido = false;
     }
 
-    /* ===== ASSUNTO ===== */
-
-    if (assunto.value === "") {
-
-      mostrarErro(assunto,
-        "Escolha um assunto.");
-
-      formularioValido = false;
+    if (assuntoValor === "") {
+      mostrarErro(assunto, "Escolha um assunto.");
+      valido = false;
     }
 
-    /* ===== MENSAGEM ===== */
-
-    if (mensagem.value.trim() === "") {
-
-      mostrarErro(mensagem,
-        "Digite uma mensagem.");
-
-      formularioValido = false;
-
-    } else if (mensagem.value.trim().length < 10) {
-
-      mostrarErro(mensagem,
-        "A mensagem deve ter pelo menos 10 caracteres.");
-
-      formularioValido = false;
+    if (mensagemValor === "") {
+      mostrarErro(mensagem, "O campo mensagem é obrigatório.");
+      valido = false;
+    } else if (mensagemValor.length < 10) {
+      mostrarErro(mensagem, "A mensagem precisa ter pelo menos 10 caracteres.");
+      valido = false;
     }
 
-    /* ===== SUCESSO ===== */
-
-    if (formularioValido) {
-
+    if (valido) {
       respostaFormulario.textContent =
-        "Contato enviado com sucesso!";
+        "Contato enviado com sucesso! Em breve a Well Store responderá sua mensagem.";
 
-      respostaFormulario.className =
-        "sucesso";
+      respostaFormulario.className = "sucesso";
 
       formContato.reset();
     }
-
   });
-
 }
 
-/* ===== VALIDAR EMAIL ===== */
-
-function validarEmail(email) {
-
-  const regex =
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  return regex.test(email);
-
-}
-
-/* ===== MOSTRAR ERRO ===== */
-
-function mostrarErro(campo, mensagem) {
-
+function mostrarErro(campo, texto) {
   campo.classList.add("erro");
 
-  const mensagemErro =
-    document.createElement("div");
+  const erro = document.createElement("small");
+  erro.className = "erro-campo";
+  erro.textContent = texto;
 
-  mensagemErro.className =
-    "mensagem-erro";
-
-  mensagemErro.innerText = mensagem;
-
-  campo.parentNode.appendChild(mensagemErro);
-
+  campo.insertAdjacentElement("afterend", erro);
 }
 
-/* ===== LIMPAR ===== */
+function limparErros() {
+  const mensagensErro = document.querySelectorAll(".erro-campo");
 
-function limparMensagens() {
-
-  const erros =
-    document.querySelectorAll(".mensagem-erro");
-
-  erros.forEach(function (erro) {
-
-    erro.remove();
-
+  mensagensErro.forEach(function (mensagem) {
+    mensagem.remove();
   });
 
-  const campos =
-    document.querySelectorAll("input, select, textarea");
+  const campos = document.querySelectorAll("input, select, textarea");
 
   campos.forEach(function (campo) {
-
     campo.classList.remove("erro");
-
   });
 
   respostaFormulario.textContent = "";
-
+  respostaFormulario.className = "";
 }
