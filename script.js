@@ -1,6 +1,7 @@
 const formContato = document.getElementById("formContato");
 
-const respostaFormulario = document.getElementById("respostaFormulario");
+const respostaFormulario =
+  document.getElementById("respostaFormulario");
 
 if (formContato) {
 
@@ -8,60 +9,161 @@ if (formContato) {
 
     evento.preventDefault();
 
-    const nome = document.getElementById("nome");
-    const email = document.getElementById("email");
-    const telefone = document.getElementById("telefone");
-    const assunto = document.getElementById("assunto");
-    const mensagem = document.getElementById("mensagem");
+    limparMensagens();
 
-    limparErros();
+    const nome =
+      document.getElementById("nome");
 
-    if (
-      nome.value.trim() === "" ||
-      email.value.trim() === "" ||
-      telefone.value.trim() === "" ||
-      assunto.value === "" ||
-      mensagem.value.trim() === ""
-    ) {
+    const email =
+      document.getElementById("email");
 
-      respostaFormulario.textContent =
-        "Por favor, preencha todos os campos.";
+    const telefone =
+      document.getElementById("telefone");
 
-      respostaFormulario.className = "mensagem-erro";
+    const assunto =
+      document.getElementById("assunto");
 
-      return;
+    const mensagem =
+      document.getElementById("mensagem");
+
+    let formularioValido = true;
+
+    /* ===== NOME ===== */
+
+    if (nome.value.trim() === "") {
+
+      mostrarErro(nome,
+        "Digite seu nome.");
+
+      formularioValido = false;
+
+    } else if (nome.value.trim().length < 3) {
+
+      mostrarErro(nome,
+        "O nome deve ter pelo menos 3 letras.");
+
+      formularioValido = false;
     }
 
-    if (!validarEmail(email.value)) {
+    /* ===== EMAIL ===== */
 
-      respostaFormulario.textContent =
-        "Digite um e-mail válido.";
+    if (email.value.trim() === "") {
 
-      respostaFormulario.className = "mensagem-erro";
+      mostrarErro(email,
+        "Digite seu e-mail.");
 
-      email.classList.add("erro");
+      formularioValido = false;
 
-      return;
+    } else if (!validarEmail(email.value)) {
+
+      mostrarErro(email,
+        "Digite um e-mail válido.");
+
+      formularioValido = false;
     }
 
-    respostaFormulario.textContent =
-      "Contato enviado com sucesso! Em breve responderemos.";
+    /* ===== TELEFONE ===== */
 
-    respostaFormulario.className = "sucesso";
+    if (telefone.value.trim() === "") {
 
-    formContato.reset();
+      mostrarErro(telefone,
+        "Digite seu telefone.");
+
+      formularioValido = false;
+
+    } else if (telefone.value.replace(/\D/g, "").length < 10) {
+
+      mostrarErro(telefone,
+        "Telefone inválido.");
+
+      formularioValido = false;
+    }
+
+    /* ===== ASSUNTO ===== */
+
+    if (assunto.value === "") {
+
+      mostrarErro(assunto,
+        "Escolha um assunto.");
+
+      formularioValido = false;
+    }
+
+    /* ===== MENSAGEM ===== */
+
+    if (mensagem.value.trim() === "") {
+
+      mostrarErro(mensagem,
+        "Digite uma mensagem.");
+
+      formularioValido = false;
+
+    } else if (mensagem.value.trim().length < 10) {
+
+      mostrarErro(mensagem,
+        "A mensagem deve ter pelo menos 10 caracteres.");
+
+      formularioValido = false;
+    }
+
+    /* ===== SUCESSO ===== */
+
+    if (formularioValido) {
+
+      respostaFormulario.textContent =
+        "Contato enviado com sucesso!";
+
+      respostaFormulario.className =
+        "sucesso";
+
+      formContato.reset();
+    }
 
   });
 
 }
 
+/* ===== VALIDAR EMAIL ===== */
+
 function validarEmail(email) {
 
-  return email.includes("@") && email.includes(".");
+  const regex =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  return regex.test(email);
 
 }
 
-function limparErros() {
+/* ===== MOSTRAR ERRO ===== */
+
+function mostrarErro(campo, mensagem) {
+
+  campo.classList.add("erro");
+
+  const mensagemErro =
+    document.createElement("div");
+
+  mensagemErro.className =
+    "mensagem-erro";
+
+  mensagemErro.innerText = mensagem;
+
+  campo.parentNode.appendChild(mensagemErro);
+
+}
+
+/* ===== LIMPAR ===== */
+
+function limparMensagens() {
+
+  const erros =
+    document.querySelectorAll(".mensagem-erro");
+
+  erros.forEach(function (erro) {
+
+    erro.remove();
+
+  });
 
   const campos =
     document.querySelectorAll("input, select, textarea");
@@ -73,7 +175,5 @@ function limparErros() {
   });
 
   respostaFormulario.textContent = "";
-
-  respostaFormulario.className = "";
 
 }
