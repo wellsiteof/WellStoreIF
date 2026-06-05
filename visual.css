@@ -595,3 +595,23 @@ body {
   font-weight: bold;
   margin-top: 20px;
 }
+.erro {
+  border: 2px solid red !important;
+}
+
+.erro-campo {
+  color: red;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  margin-top: -10px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.sucesso {
+  color: green;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
